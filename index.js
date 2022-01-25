@@ -9,7 +9,7 @@ app.get("/", async (req, res) => {
   res.send("VeriBuy API")
 })
 
-app.get("/licensing/getall", async (req, res) => {
+app.get("/getall", async (req, res) => {
   try {
 
     const users = await User.find();
