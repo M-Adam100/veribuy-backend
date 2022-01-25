@@ -22,6 +22,21 @@ app.get("/getall", async (req, res) => {
   }
 });
 
+app.post("/checkUser", async (req, res) => {
+  try {
+
+    const [foundUser] = await User.find({emailAddress: req.body.emailAddress});
+    
+    if (foundUser) res.status(200).json({success: "User Present!"});
+    else res.status(200).json({error: "No Such User Exists!"});
+
+  } catch (err) {
+
+    res.status(400).json({ message: "No data found.." })
+
+  }
+})
+
 
 
 app.post("/createUser", async (req, res) => {
@@ -31,7 +46,7 @@ app.post("/createUser", async (req, res) => {
       emailAddress
     });
     if (foundUser)
-      return res.send("License already exists for this product!!");
+      return res.status(200).json({error: "User with this Email exists!"});
     const username = emailAddress.split('@')[0];
     const user = new User({
       creationDate: new Date().getTime(),
@@ -40,7 +55,7 @@ app.post("/createUser", async (req, res) => {
     });
     const saved = await user.save();
 
-    res.send("User Created Successfully!");
+    res.status(200).json({success: "User Created Successfully!"});
   } catch (error) {
     res.status(400).json({ message: error });
   }
