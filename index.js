@@ -12,8 +12,8 @@ app.get("/", async (req, res) => {
 app.get("/licensing/getall", async (req, res) => {
   try {
 
-    const user = await User.find();
-    res.status(200).json(user);
+    const users = await User.find();
+    res.status(200).json(users);
 
   } catch (err) {
 
